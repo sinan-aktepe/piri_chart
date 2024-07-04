@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:syncfusion_flutter_core/core.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
+import '../../../core/core.dart';
+import '../../../core/theme.dart';
 
 import '../axis/axis.dart';
 

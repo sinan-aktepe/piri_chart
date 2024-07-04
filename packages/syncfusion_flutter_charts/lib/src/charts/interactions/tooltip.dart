@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:syncfusion_flutter_core/core.dart' show DataMarkerType;
+import '../../../core/core.dart' show DataMarkerType;
 
 import '../axis/axis.dart';
 import '../base.dart';

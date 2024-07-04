@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_core/core.dart' show DataMarkerType;
+import '../../../core/core.dart' show DataMarkerType;
 
 import '../axis/axis.dart';
 import '../common/data_label.dart';

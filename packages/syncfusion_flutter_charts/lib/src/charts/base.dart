@@ -6,8 +6,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:syncfusion_flutter_core/localizations.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
+import '../../../core/localizations.dart';
+import '../../../core/theme.dart';
 
 import 'axis/axis.dart';
 import 'axis/category_axis.dart';

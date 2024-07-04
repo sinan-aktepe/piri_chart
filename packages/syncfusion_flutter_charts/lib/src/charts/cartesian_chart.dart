@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
-import 'package:syncfusion_flutter_core/localizations.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
+import '../../../core/localizations.dart';
+import '../../../core/theme.dart';
 
 import 'axis/axis.dart';
 import 'axis/numeric_axis.dart';

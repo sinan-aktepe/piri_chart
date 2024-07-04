@@ -14,7 +14,7 @@
 
 library charts;
 
-export 'package:syncfusion_flutter_core/core.dart'
+export './core/core.dart'
     show DataMarkerType, TooltipAlignment;
 
 export './src/charts/axis/axis.dart'

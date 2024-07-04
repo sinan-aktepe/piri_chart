@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
+import '../../core/theme.dart';
 
 /// Holds the value of [SfSparkChartThemeData] color properties for
 /// material 2 and material 3 theme based on the brightness.

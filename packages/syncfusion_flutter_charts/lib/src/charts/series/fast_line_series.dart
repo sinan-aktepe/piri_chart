@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_core/core.dart';
+import '../../../core/core.dart';
 
 import '../axis/axis.dart';
 import '../behaviors/trackball.dart';

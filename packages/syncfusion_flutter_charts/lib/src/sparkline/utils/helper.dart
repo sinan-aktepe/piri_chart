@@ -3,8 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:syncfusion_flutter_core/core.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
+import '../../../core/core.dart';
+import '../../../core/theme.dart';
 
 import '../marker.dart';
 import 'enum.dart';

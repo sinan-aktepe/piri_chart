@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_core/core.dart';
+import '../../../core/core.dart';
 
 import '../base.dart';
 import '../behaviors/trackball.dart';

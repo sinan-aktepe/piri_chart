@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:syncfusion_flutter_core/core.dart';
+import '../../../core/core.dart';
 
 import '../base.dart';
 import '../series/pyramid_series.dart';

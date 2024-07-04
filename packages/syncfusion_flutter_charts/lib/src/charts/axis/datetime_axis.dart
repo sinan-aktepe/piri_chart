@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart' hide TextDirection;
-import 'package:syncfusion_flutter_core/core.dart';
+import '../../../core/core.dart';
 
 import '../common/callbacks.dart';
 import '../utils/constants.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
+import '../../../core/theme.dart';
 import '../plot_band.dart';
 import '../renderers/spark_bar_renderer.dart';
 import '../theme.dart';

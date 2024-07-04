@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
+import '../../../core/theme.dart';
 
 /// Holds the value of [ChartThemeData] color properties
 class ChartThemeData extends SfChartThemeData {
