@@ -175,13 +175,6 @@ packages:
       relative: true
     source: path
     version: "30.0.0"
-  syncfusion_flutter_core:
-    dependency: transitive
-    description:
-      path: "../../syncfusion_flutter_core"
-      relative: true
-    source: path
-    version: "30.0.0"
   term_glyph:
     dependency: transitive
     description:

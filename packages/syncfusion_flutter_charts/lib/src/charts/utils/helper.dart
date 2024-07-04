@@ -73,7 +73,6 @@ Widget buildChartWithTitle(
                 style: chartThemeData.titleTextStyle,
                 overflow: TextOverflow.clip,
                 textAlign: TextAlign.center,
-                textScaler: const TextScaler.linear(1.2),
               ),
             ),
           ),
