@@ -53,8 +53,6 @@ abstract class ChartAxis extends LeafRenderObjectWidget {
     this.labelStyle,
     this.labelIntersectAction = AxisLabelIntersectAction.hide,
     this.desiredIntervals,
-    this.majorGridLines = const MajorGridLines(),
-    this.minorGridLines = const MinorGridLines(),
     this.maximumLabels = 3,
     this.minorTicksPerInterval = 0,
     this.isInversed = false,
@@ -193,7 +191,6 @@ abstract class ChartAxis extends LeafRenderObjectWidget {
   ///     );
   /// }
   /// ```
-  final MajorGridLines majorGridLines;
 
   /// Customizes the appearance of the minor grid lines.
   ///
@@ -210,7 +207,6 @@ abstract class ChartAxis extends LeafRenderObjectWidget {
   ///     );
   /// }
   /// ```
-  final MinorGridLines minorGridLines;
 
   /// Customizes the appearance of the axis labels.
   ///
@@ -1124,8 +1120,6 @@ abstract class ChartAxis extends LeafRenderObjectWidget {
       ..axisLine = axisLine
       ..majorTickLines = majorTickLines
       ..minorTickLines = minorTickLines
-      ..majorGridLines = majorGridLines
-      ..minorGridLines = minorGridLines
       ..labelStyle = labelStyle
       ..title = title
       ..rangePadding = rangePadding
@@ -1175,8 +1169,6 @@ abstract class ChartAxis extends LeafRenderObjectWidget {
       ..axisLine = axisLine
       ..majorTickLines = majorTickLines
       ..minorTickLines = minorTickLines
-      ..majorGridLines = majorGridLines
-      ..minorGridLines = minorGridLines
       ..labelStyle = labelStyle
       ..title = title
       ..rangePadding = rangePadding
@@ -1388,24 +1380,7 @@ abstract class RenderChartAxis extends RenderBox with ChartAreaUpdateMixin {
       markNeedsLayout();
     }
   }
-
-  MajorGridLines get majorGridLines => _majorGridLines;
-  MajorGridLines _majorGridLines = const MajorGridLines();
-  set majorGridLines(MajorGridLines value) {
-    if (_majorGridLines != value) {
-      _majorGridLines = value;
-      markNeedsLayout();
-    }
-  }
-
-  MinorGridLines get minorGridLines => _minorGridLines;
-  MinorGridLines _minorGridLines = const MinorGridLines();
-  set minorGridLines(MinorGridLines value) {
-    if (_minorGridLines != value) {
-      _minorGridLines = value;
-      markNeedsLayout();
-    }
-  }
+  
 
   TextStyle? get labelStyle => _labelStyle;
   TextStyle? _labelStyle;
@@ -3482,162 +3457,6 @@ mixin AxisDependent {
   void didRangeChange(RenderChartAxis axis);
 }
 
-abstract class _GridLineRenderer {
-  _GridLineRenderer(this.axis);
-
-  final RenderChartAxis axis;
-
-  @nonVirtual
-  void onPaint(PaintingContext context, Offset offset) {
-    final Offset plotAreaGlobalOffset =
-        axis.parent!.localToGlobal(axis.parent!.plotAreaOffset);
-    final Offset plotAreaOffset = axis.globalToLocal(plotAreaGlobalOffset);
-    context.canvas.save();
-    context.canvas.clipRect(axis.parent!.plotAreaBounds);
-    _drawMajorGridLines(context, plotAreaOffset + offset);
-    _drawMinorGridLines(context, plotAreaOffset + offset);
-    context.canvas.restore();
-  }
-
-  @protected
-  void _drawMajorGridLines(PaintingContext context, Offset offset);
-
-  @protected
-  void _drawMinorGridLines(PaintingContext context, Offset offset);
-}
-
-class _HorizontalGridLineRenderer extends _GridLineRenderer {
-  _HorizontalGridLineRenderer(RenderChartAxis axis) : super(axis);
-
-  @override
-  void _drawMajorGridLines(PaintingContext context, Offset offset) {
-    final MajorGridLines majorGridLines = axis.majorGridLines;
-    final Color color =
-        (majorGridLines.color ?? axis.chartThemeData!.majorGridLineColor)!;
-    _drawGridLines(context, offset, axis.majorTickPositions, color,
-        majorGridLines.width, majorGridLines.dashArray);
-  }
-
-  @override
-  void _drawMinorGridLines(PaintingContext context, Offset offset) {
-    final MinorGridLines minorGridLines = axis.minorGridLines;
-    final Color color =
-        (minorGridLines.color ?? axis.chartThemeData!.minorGridLineColor)!;
-    _drawGridLines(context, offset, axis.minorTickPositions, color,
-        minorGridLines.width, minorGridLines.dashArray);
-  }
-
-  void _drawGridLines(
-    PaintingContext context,
-    Offset offset,
-    List<double> positions,
-    Color color,
-    double width,
-    List<double>? dashArray,
-  ) {
-    if (axis.associatedAxis != null &&
-        color != Colors.transparent &&
-        width > 0) {
-      final Paint paint = Paint()
-        ..isAntiAlias = true
-        ..color = color
-        ..strokeWidth = width
-        ..style = PaintingStyle.stroke;
-
-      final RenderChartAxis associatedAxis = axis.associatedAxis!;
-      num minimum = associatedAxis.visibleRange!.minimum;
-      num maximum = associatedAxis.visibleRange!.maximum;
-
-      if (associatedAxis is RenderLogarithmicAxis) {
-        minimum = associatedAxis.toPow(minimum);
-        maximum = associatedAxis.toPow(maximum);
-      }
-
-      final double plotOffset = associatedAxis.plotOffset;
-      double y1 = associatedAxis.pointToPixel(minimum);
-      double y2 = associatedAxis.pointToPixel(maximum);
-      if (associatedAxis.isInversed) {
-        y1 = y1 - plotOffset;
-        y2 = y2 + plotOffset;
-      } else {
-        y1 = y1 + plotOffset;
-        y2 = y2 - plotOffset;
-      }
-      for (final double position in positions) {
-        final Offset start = offset.translate(position, y1);
-        final Offset end = Offset(start.dx, offset.dy + y2);
-        drawDashes(context.canvas, dashArray, paint, start: start, end: end);
-      }
-    }
-  }
-}
-
-class _VerticalGridLineRenderer extends _GridLineRenderer {
-  _VerticalGridLineRenderer(RenderChartAxis axis) : super(axis);
-
-  @override
-  void _drawMajorGridLines(PaintingContext context, Offset offset) {
-    final MajorGridLines majorGridLines = axis.majorGridLines;
-    final Color color =
-        (majorGridLines.color ?? axis.chartThemeData!.majorGridLineColor)!;
-    _drawGridLines(context, offset, axis.majorTickPositions, color,
-        majorGridLines.width, majorGridLines.dashArray);
-  }
-
-  @override
-  void _drawMinorGridLines(PaintingContext context, Offset offset) {
-    final MinorGridLines minorGridLines = axis.minorGridLines;
-    final Color color =
-        (minorGridLines.color ?? axis.chartThemeData!.minorGridLineColor)!;
-    _drawGridLines(context, offset, axis.minorTickPositions, color,
-        minorGridLines.width, minorGridLines.dashArray);
-  }
-
-  void _drawGridLines(
-    PaintingContext context,
-    Offset offset,
-    List<double> positions,
-    Color color,
-    double width,
-    List<double>? dashArray,
-  ) {
-    if (axis.associatedAxis != null &&
-        color != Colors.transparent &&
-        width > 0) {
-      final Paint paint = Paint()
-        ..isAntiAlias = true
-        ..color = color
-        ..strokeWidth = width
-        ..style = PaintingStyle.stroke;
-
-      final RenderChartAxis associatedAxis = axis.associatedAxis!;
-      num minimum = associatedAxis.visibleRange!.minimum;
-      num maximum = associatedAxis.visibleRange!.maximum;
-
-      if (associatedAxis is RenderLogarithmicAxis) {
-        minimum = associatedAxis.toPow(minimum);
-        maximum = associatedAxis.toPow(maximum);
-      }
-
-      final double plotOffset = associatedAxis.plotOffset;
-      double x1 = associatedAxis.pointToPixel(minimum);
-      double x2 = associatedAxis.pointToPixel(maximum);
-      if (associatedAxis.isInversed) {
-        x1 = x1 + plotOffset;
-        x2 = x2 - plotOffset;
-      } else {
-        x1 = x1 - plotOffset;
-        x2 = x2 + plotOffset;
-      }
-      for (final double position in positions) {
-        final Offset start = offset.translate(x1, position);
-        final Offset end = Offset(offset.dx + x2, start.dy);
-        drawDashes(context.canvas, dashArray, paint, start: start, end: end);
-      }
-    }
-  }
-}
-
 class AxisPlotBand {
   AxisPlotBand({
     required this.bounds,
@@ -3856,7 +3675,6 @@ abstract class _AxisRenderer {
   _AxisRenderer({required this.axis});
 
   final RenderChartAxis axis;
-  late _GridLineRenderer _gridLineRenderer;
   _PlotBandRenderer? _plotBandRenderer;
 
   final TextPainter _textPainter = TextPainter();
@@ -4124,7 +3942,6 @@ abstract class _AxisRenderer {
 
   @nonVirtual
   void _paintGridLines(PaintingContext context, Offset offset) {
-    _gridLineRenderer.onPaint(context, offset);
   }
 
   @nonVirtual
@@ -4189,7 +4006,6 @@ abstract class _AxisRenderer {
 
 class _HorizontalAxisRenderer extends _AxisRenderer {
   _HorizontalAxisRenderer(RenderChartAxis axis) : super(axis: axis) {
-    _gridLineRenderer = _HorizontalGridLineRenderer(axis);
     _plotBandRenderer = _HorizontalPlotBandRenderer(axis);
     _multilevelLabelBorderShape = _HorizontalMultilevelLabelBorderShape();
   }
@@ -4461,7 +4277,6 @@ class _HorizontalAxisRenderer extends _AxisRenderer {
 
 class _VerticalAxisRenderer extends _AxisRenderer {
   _VerticalAxisRenderer(RenderChartAxis axis) : super(axis: axis) {
-    _gridLineRenderer = _VerticalGridLineRenderer(axis);
     _plotBandRenderer = _VerticalPlotBandRenderer(axis);
     _multilevelLabelBorderShape = _VerticalMultilevelLabelBorderShape();
   }

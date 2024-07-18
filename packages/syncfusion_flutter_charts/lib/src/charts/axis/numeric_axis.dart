@@ -41,8 +41,6 @@ class NumericAxis extends ChartAxis {
     super.maximumLabels,
     super.majorTickLines,
     super.minorTickLines,
-    super.majorGridLines,
-    super.minorGridLines,
     super.edgeLabelPlacement,
     super.labelStyle,
     super.plotOffset,

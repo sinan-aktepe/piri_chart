@@ -46,8 +46,6 @@ class DateTimeAxis extends ChartAxis {
     super.plotOffset,
     super.majorTickLines,
     super.minorTickLines,
-    super.majorGridLines,
-    super.minorGridLines,
     super.labelStyle,
     this.dateFormat,
     this.intervalType = DateTimeIntervalType.auto,

@@ -47,10 +47,8 @@ class _MyHomePageState extends State<_MyHomePage> {
               child: SfCartesianChart(
                   tooltipBehavior: TooltipBehavior(enable: true),
                   series: <CartesianSeries>[
-                    SplineAreaSeries<ChartData, int>(
+                    FastLineSeries<ChartData, int>(
                       dataSource: data,
-                      cardinalSplineTension: 0,
-                      splineType: SplineType.cardinal,
                       markerSettings: MarkerSettings(
                         isVisible: true,
                       ),

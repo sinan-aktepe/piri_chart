@@ -48,7 +48,6 @@ class DateTimeCategoryAxis extends ChartAxis {
     super.opposedPosition,
     super.maximumLabels,
     super.majorTickLines,
-    super.majorGridLines,
     super.labelStyle,
     super.plotOffset,
     super.initialZoomFactor,
